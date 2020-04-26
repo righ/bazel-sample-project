@@ -1,0 +1,21 @@
+apiVersion: skaffold/v2beta1
+kind: Config
+deploy:
+  kustomize:
+    paths:
+    - ./kube/skaffold
+profiles:
+- name: dev
+  build:
+    artifacts:
+    - image: righm9/echo
+      bazel:
+        target: //echo:container.tar
+    - image: righm9/gateway
+      bazel:
+        target: //gateway:container.tar
+    local:
+      push: false
+      useBuildkit: true
+  activation:
+  - command: dev

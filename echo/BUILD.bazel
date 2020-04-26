@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("//:service.bzl", "service_image")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "github.com/righ/go-sample-bazel-project/echo",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//protobuf:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "echo",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
+
+service_image("echo")

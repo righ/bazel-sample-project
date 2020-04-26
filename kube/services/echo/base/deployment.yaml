@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo
+spec:
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: echo
+  template:
+    metadata:
+      labels:
+        app: echo
+      name: echo
+    spec:
+      containers:
+        - image: righm9/echo
+          name: echo
+          ports:
+            - containerPort: 8001
+              name: grpc
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 50m
+              memory: 200Mi
+
