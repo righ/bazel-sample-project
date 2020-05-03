@@ -4,7 +4,7 @@ load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 
 def service_image(name, **kwargs):
     pkg_tar(
-        name = "service_tar",
+        name = "tar",
         srcs = ["@grpc_health_probe//file"],
         mode = "0o755",
         package_dir = "/bin",
@@ -12,15 +12,15 @@ def service_image(name, **kwargs):
     )
 
     container_image(
-        name = "service_image",
+        name = "base_image",
         base = "@go_image_base//image",
-        tars = [":service_tar"],
+        tars = [":tar"],
         visibility = ["//visibility:public"],
     )
 
     go_image(
-        name = "container",
-        base = ":service_image",
+        name = "image",
+        base = ":base_image",
         embed = ["//" + name + ":go_default_library"],
         goarch = "amd64",
         goos = "linux",
@@ -29,10 +29,19 @@ def service_image(name, **kwargs):
     )
 
     container_push(
-        name = "push",
+        name = "push_to_dockerhub",
         format = "Docker",
-        image = ":service_image",
+        image = ":image",
         registry = "docker.io",
         repository = "righm9/" + name,
         tag = "{BUILD_TIMESTAMP}",
+    )
+
+    container_push(
+        name = "push_to_gcr",
+        format = "Docker",
+        image = ":image",
+        registry = "gcr.io",
+        repository = "righm9/" + name,
+        tag = "latest",
     )

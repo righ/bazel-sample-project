@@ -4,4 +4,10 @@ bases:
 - ../../base
 patchesStrategicMerge:
 - service.yaml
-
+patchesJson6902:
+- path: patch.yaml
+  target:
+    kind: Deployment
+    name: gateway
+    group: apps
+    version: v1

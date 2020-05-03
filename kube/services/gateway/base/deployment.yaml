@@ -14,34 +14,34 @@ spec:
       name: gateway
     spec:
       containers:
-        - image: righm9/gateway
-          name: gateway
-          env:
-            - name: ECHO_HOST
-              value: echo.default.svc.cluster.local
-          ports:
-            - containerPort: 8000
-              name: grpc
-              protocol: TCP
-          resources:
-            limits:
-              cpu: 50m
-              memory: 200Mi
-        
-        - image: nginx:1.17
-          name: nginx
-          ports:
-            - containerPort: 80
-              name: http
-              protocol: TCP
-          resources:
-            limits:
-              cpu: 50m
-              memory: 200Mi
-          volumeMounts:
-            - name: nginx-conf
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
+      - image: righm9/gateway
+        name: gateway
+        env:
+          - name: ECHO_HOST
+            value: echo.default.svc.cluster.local
+        ports:
+          - containerPort: 8000
+            name: grpc
+            protocol: TCP
+        resources:
+          limits:
+            cpu: 50m
+            memory: 200Mi
+      
+      - image: nginx:1.17
+        name: nginx
+        ports:
+          - containerPort: 80
+            name: http
+            protocol: TCP
+        resources:
+          limits:
+            cpu: 50m
+            memory: 200Mi
+        volumeMounts:
+          - name: nginx-conf
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
       volumes:
         - name: nginx-conf
           configMap:

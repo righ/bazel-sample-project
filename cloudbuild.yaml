@@ -1,0 +1,23 @@
+steps:
+- id: deploy gateway
+  name: 'gcr.io/$PROJECT_ID/kustomize'
+  args:
+  - 'build'
+  - 'kube/services/gateway/overlays/production'
+  env:
+  - 'APPLY=true'
+  - 'CLOUDSDK_COMPUTE_ZONE=asia-northeast1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=sample-cluster'
+  - 'GCLOUD_PROJECT=righm9'
+
+- id: deploy echo
+  name: 'gcr.io/$PROJECT_ID/kustomize'
+  args:
+  - 'build'
+  - 'kube/services/echo/overlays/production'
+  env:
+  - 'APPLY=true'
+  - 'CLOUDSDK_COMPUTE_ZONE=asia-northeast1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=sample-cluster'
+  - 'GCLOUD_PROJECT=righm9'
+

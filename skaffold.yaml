@@ -10,10 +10,10 @@ profiles:
     artifacts:
     - image: righm9/echo
       bazel:
-        target: //echo:container.tar
+        target: //echo:image.tar
     - image: righm9/gateway
       bazel:
-        target: //gateway:container.tar
+        target: //gateway:image.tar
     local:
       push: false
       useBuildkit: true

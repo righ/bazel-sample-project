@@ -14,14 +14,14 @@ spec:
       name: echo
     spec:
       containers:
-        - image: righm9/echo
-          name: echo
-          ports:
-            - containerPort: 8001
-              name: grpc
-              protocol: TCP
-          resources:
-            limits:
-              cpu: 50m
-              memory: 200Mi
+      - image: righm9/echo
+        name: echo
+        ports:
+          - containerPort: 8001
+            name: grpc
+            protocol: TCP
+        resources:
+          limits:
+            cpu: 50m
+            memory: 200Mi
 
